@@ -20,9 +20,13 @@ symbol_dict = {"AAPL": "Apple", "NVDA": "Nvidia", "TSLA": "Tesla", "IBM": "IBM"}
 df_dict = {symbol: stockdata_object.stock_dataframe(symbol) for symbol in symbol_dict}
 
 
-
 # create a Dash App
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.MATERIA])
+app = dash.Dash(
+    __name__,
+    external_stylesheets=[dbc.themes.MATERIA],
+    # makes possible for responsivity
+    meta_tags=[dict(name="viewports", content="width=dice-width, initial-scale=1.0")],
+)
 
 app.layout = Layout(symbol_dict).layout()
 
