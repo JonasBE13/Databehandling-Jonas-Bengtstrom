@@ -1,23 +1,19 @@
 import dash
-import dash_bootstrap_components as dbc
 import os
 from load_data import StockData
-from dash import html, dcc  # dcc - dash core components
 from dash.dependencies import Output, Input
 import plotly_express as px
 from time_filtering import filter_time
 import pandas as pd
 from layout import Layout
+import dash_bootstrap_components as dbc
 
 directory_path = os.path.dirname(__file__)
 path = os.path.join(directory_path, "stocksdata")
 
-print(path)
 
 stockdata_object = StockData(path)
 
-# pick one stock
-# print(stockdata_object.stock_dataframe("AAPL"))
 
 symbol_dict = {"AAPL": "Apple", "NVDA": "Nvidia", "TSLA": "Tesla", "IBM": "IBM"}
 
@@ -25,11 +21,8 @@ df_dict = {symbol: stockdata_object.stock_dataframe(symbol) for symbol in symbol
 
 
 
-print(df_dict.keys())
-# print(df_dict["TSLA"][0])
-
 # create a Dash App
-app = dash.Dash(__name__)
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.MATERIA])
 
 app.layout = Layout(symbol_dict).layout()
 
