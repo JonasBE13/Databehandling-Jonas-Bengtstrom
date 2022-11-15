@@ -31,15 +31,27 @@ class Layout:
                 dbc.Row(
                     class_name="mt-4",
                     children=[
-                        dbc.Col(html.P("Choose a stock"), class_name="mt-1",),
+                        dbc.Col(
+                            html.P("Choose a stock"),
+                            class_name="mt-1",
+                            xs="12",
+                            sm="12",
+                            md="6",
+                            lg="4",
+                            xl={"offset": 2, "size": 2},
+                        ),
                         dbc.Col(
                             dcc.Dropdown(
                                 id="stockpicker-dropdown",
                                 options=self._stock_options_dropdown,
                                 value="AAPL",
-                            ), lg = "4",
+                            ),
+                            xs="12",
+                            sm="12",
+                            md="12",
+                            lg="4",
+                            xl="3",
                         ),
-
                         dbc.Col(
                             dbc.Card(
                                 dcc.RadioItems(
@@ -47,23 +59,77 @@ class Layout:
                                     className="mt-1",
                                     options=self._ohlc_options,
                                     value="close",
-                                )
-                            )
+                                ),
+                            ),
+                            xs="12",
+                            sm="12",
+                            md="12",
+                            lg="4",
+                            xl="3",
+                        ),
+                    ],
+                ),
+                dbc.Row(
+                    [
+                        dbc.Col(
+                            [
+                                dcc.Graph(id="stock-graph"),
+                                dcc.Slider(
+                                    id="time-slider",
+                                    min=0,
+                                    max=6,
+                                    marks=self._slider_marks,
+                                    value=2,
+                                    step=None,
+                                ),
+                            ],
+
+                            lg={"size": 6},
+                            xl=6,
+                        ),
+                        dbc.Col(
+                            [
+                                dbc.Row(
+                                    dbc.Card(
+                                        [
+                                            html.H2(
+                                                "Highest value",
+                                                className="h5 mt-3 mx-3",
+                                            ),
+                                            html.P(
+                                                id="highest-value",
+                                                className="h1 mx-2 text-success",
+                                            ),  # text-success = grön färg
+                                        ]
+                                    ),
+                                    className="mt-5, h-25",
+                                ),
+                                dbc.Row(
+                                    dbc.Card(
+                                        [
+                                            html.H2(
+                                                "Lowest value", className="h5 mt-3 mx-3"
+                                            ),
+                                            html.P(
+                                                id="lowest-value",
+                                                className="h1 mx-2 text-danger",
+                                            ),  # text-danger = röd färg
+                                        ]
+                                    ),
+                                    className="mt-5, h-25",
+                                ),
+                            ],
+                            sm = "5",
+                            md = "3",
+                            lg="3",
+                            xl="2",
+                            className="mt-5 mx-5",
                         ),
                     ]
                 ),
-                html.P(id="highest-value"),
-                html.P(id="lowest-value"),
-                dcc.Graph(id="stock-graph"),  # graph har en default value på "figure"
-                dcc.Slider(
-                    id="time-slider",
-                    min=0,
-                    max=6,
-                    marks=self._slider_marks,
-                    value=2,
-                    step=None,
-                ),  #  step = none: diskreta värden, går inte att gå emellan
+                #  step = none: diskreta värden, går inte att gå emellan
                 # storing intermediate value on clients browser in order to share between several callbacks
                 dcc.Store(id="filtered-df"),
-            ]
+            ],
+            fluid=False,
         )

@@ -25,7 +25,7 @@ app = dash.Dash(
     __name__,
     external_stylesheets=[dbc.themes.MATERIA],
     # makes possible for responsivity
-    meta_tags=[dict(name="viewports", content="width=dice-width, initial-scale=1.0")],
+    meta_tags=[dict(name="viewports", content="width=device-width, initial-scale=1.0")],
 )
 
 app.layout = Layout(symbol_dict).layout()
@@ -58,7 +58,7 @@ def highest_lowest_value_update(json_df, ohlc):
     dff = pd.read_json(json_df)
     highest_value = dff[ohlc].max()
     lowest_value = dff[ohlc].min()
-    return highest_value, lowest_value
+    return f"${highest_value:.2f}", f"${lowest_value:.2f}"
 
 
 @app.callback(
