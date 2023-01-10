@@ -22,6 +22,8 @@ python-dotenv = "*"
 dash = "*"
 dash-bootstrap-components = "*"
 numexpr = "*"
+sympy = "*"
+scipy = "*"
 
 [dev-packages]
 
